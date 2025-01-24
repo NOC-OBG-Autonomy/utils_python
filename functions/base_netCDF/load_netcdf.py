@@ -16,9 +16,10 @@ def load_netcdf(file_path: str, convert_time=True):
     """
     try:
         xarray = xr.open_dataset(os.path.normpath(file_path), engine="netcdf4")
-    except Exception:
+    except Exception as e:
         print('ERROR: Something went wrong loading the netCDF file. ',
               'Try and absolute path and check it points to a .nc file.')
+        print(f'Full error: {e}')
         sys.exit(1)
     if convert_time:
         xarray = append_elapsed_time(xarray)
