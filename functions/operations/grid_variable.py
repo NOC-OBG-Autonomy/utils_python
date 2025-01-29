@@ -3,7 +3,7 @@ import scipy.stats as stats
 import matplotlib.pyplot as plt
 
 def grid_variable(xarray, x_dim_label: str, y_dim_label: str, target: str, resolution=[10, 10], operation='mean',
-                  plotting=False, plotting_norm='symlog'):
+                  plotting=False, norm_function='symlog'):
     """
     Applies an operation to the target variable in each grid element defined by the grid dimensions and resolution
     Args:
@@ -18,7 +18,7 @@ def grid_variable(xarray, x_dim_label: str, y_dim_label: str, target: str, resol
                    'median', 'count', 'sum', 'min', 'max', or a user-defined function which takes a 1D array of values,
                    and outputs a single numerical statistic.
         plotting: If True, will plot an image representation of the final grid.
-        plotting_norm: Is the function used to map aray data values to a colour bar for image plotting.
+        norm_function: Is the function used to map aray data values to a colour bar for image plotting.
                        Options are: 'asinh', 'function', 'functionlog', 'linear', 'log', 'logit', 'symlog'
 
 
@@ -40,7 +40,7 @@ def grid_variable(xarray, x_dim_label: str, y_dim_label: str, target: str, resol
         no_nan_grid = grid_data[~np.isnan(grid_data)]
         grid_mean, grid_std = no_nan_grid.mean(), no_nan_grid.std()
         vmin, vmax = grid_mean - 3*grid_std, grid_mean + 3*grid_std
-        plt.imshow(grid_data.T[:, ::-1], aspect='auto', norm=plotting_norm, vmin=vmin, vmax=vmax)
+        plt.imshow(grid_data.T, aspect='auto', norm=norm_function, vmin=vmin, vmax=vmax)
         plt.show(block=True)
 
-    return grid_data.T[:, ::-1]
+    return grid_data

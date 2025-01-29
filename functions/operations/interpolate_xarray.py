@@ -17,6 +17,7 @@ def interpolate_xarray(xarray, labels: list, interp_method='linear'):
         temp_xarray = append_elapsed_time(temp_xarray)
 
     for label in labels:
+        # TODO: Varify that interpolation method is good (it looks fine in plots - would be nice to get external confirmation)
         temp_xarray[label] = (temp_xarray[label].swap_dims({'N_MEASUREMENTS': 'ELAPSED_TIME'})
                               .interpolate_na(dim='ELAPSED_TIME', method=interp_method)
                               ).swap_dims({'ELAPSED_TIME': 'N_MEASUREMENTS'})
