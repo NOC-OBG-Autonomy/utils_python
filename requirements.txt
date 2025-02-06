@@ -4,3 +4,4 @@ matplotlib
 xarray
 scipy
 tqdm
+gsw
